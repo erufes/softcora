@@ -1,33 +1,46 @@
-use crate::erus::erus_types;
+use crate::erus::erus_types::led::{GPIOParam, GPIO};
+use embedded_hal::digital::v2::OutputPin;
 
 pub struct LED {
-    pin: erus_types::ERUSLedGPIO,
+    pin: GPIO,
     state: bool,
 }
 
 impl LED {
-    pub fn new(pin: erus_types::ERUSLedGPIOParam) -> Self {
-        let outputPin = pin.into_output();
+    pub fn new(pin: GPIOParam) -> Self {
+        let output_pin = pin.into_output();
 
-        if outputPin.is_ok() {
-            LED {
-                pin: outputPin.unwrap(),
-                state: false,
-            }
-        } else {
-            panic!("Failed to set LED gpio as output");
+        match output_pin {
+            Ok(pin) => LED { pin, state: false },
+            Err(_) => panic!("Failed to create LED"),
         }
     }
+
     fn update_pin_output(&mut self) {
         match self.state {
             true => {
-                // TODO: handle error!
-                self.pin.set_low();
+                let res = self.pin.set_low();
+                match res {
+                    Ok(_) => {}
+                    Err(_) => {
+                        panic!("Failed to set LED gpio low");
+                    }
+                }
             }
             false => {
-                self.pin.set_high();
+                let res = self.pin.set_high();
+                match res {
+                    Ok(_) => {}
+                    Err(_) => {
+                        panic!("Failed to set LED gpio high");
+                    }
+                }
             }
         }
+    }
+    fn set_state(&mut self, state: bool) {
+        self.state = state;
+        self.update_pin_output();
     }
 }
 
@@ -39,15 +52,12 @@ pub trait LEDTrait {
 
 impl LEDTrait for LED {
     fn on(&mut self) {
-        self.state = true;
-        self.update_pin_output();
+        self.set_state(true);
     }
     fn off(&mut self) {
-        self.state = false;
-        self.update_pin_output();
+        self.set_state(false);
     }
     fn toggle(&mut self) {
-        self.state = !self.state;
-        self.update_pin_output();
+        self.set_state(!self.state);
     }
 }

@@ -1,16 +1,17 @@
-use crate::erus::led::{LEDTrait, LED};
-use esp_idf_hal::gpio::{self, Unknown};
+use core::fmt;
 
-use super::erus_types;
+use super::erus_types::led::GPIOParam;
+use super::led::{LEDTrait, LED};
+
 pub struct ERUSBot {
     led: LED,
 }
 
 impl ERUSBot {
-    pub fn new(led_gpio: erus_types::ERUSLedGPIOParam) -> Self {
+    pub fn new(led_gpio: GPIOParam) -> Self {
         let led = LED::new(led_gpio);
-        unimplemented!("ERUSBot::new");
-        // ERUSBot { led }
+        println!("Created new bot with LED on GPIO 0");
+        ERUSBot { led }
     }
 }
 
@@ -29,5 +30,11 @@ impl ERUSBotTrait for ERUSBot {
     }
     fn toggle(&mut self) {
         self.led.toggle();
+    }
+}
+
+impl fmt::Display for ERUSBot {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "ERUSBot")
     }
 }

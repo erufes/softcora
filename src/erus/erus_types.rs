@@ -1,5 +1,29 @@
-use esp_idf_hal::gpio::Gpio0;
-use esp_idf_hal::gpio::Output;
+pub mod led {
+    use esp_idf_hal::gpio::Gpio0;
+    use esp_idf_hal::gpio::Output;
+    use esp_idf_hal::gpio::Unknown;
 
-pub type ERUSLedGPIOParam = Gpio0<Output>;
-pub type ERUSLedGPIO = Gpio0<Output>;
+    pub type GPIOParam = Gpio0<Unknown>;
+    pub type GPIO = Gpio0<Output>;
+}
+
+pub mod sensor {
+    // use esp_idf_hal::gpio::Gpio0;
+    // use esp_idf_hal::gpio::Input;
+    // use esp_idf_hal::gpio::Unknown;
+
+    // pub type FrontParam = Gpio0<Unknown>;
+    // pub type Front = Gpio0<Input>;
+
+    // pub type FrontLeftParam = Gpio0<Unknown>;
+    // pub type FrontLeft = Gpio0<Input>;
+
+    // pub type FrontRightParam = Gpio0<Unknown>;
+    // pub type FrontRight = Gpio0<Input>;
+
+    // pub type LeftParam = Gpio0<Unknown>;
+    // pub type Left = Gpio0<Input>;
+
+    // pub type RightParam = Gpio0<Unknown>;
+    // pub type Right = Gpio0<Input>;
+}
