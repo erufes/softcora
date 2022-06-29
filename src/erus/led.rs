@@ -8,33 +8,20 @@ pub struct LED {
 
 impl LED {
     pub fn new(pin: GPIOParam) -> Self {
-        let output_pin = pin.into_output();
-
-        match output_pin {
-            Ok(pin) => LED { pin, state: false },
-            Err(_) => panic!("Failed to create LED"),
+        let output_pin = pin.into_output().unwrap();
+        LED {
+            pin: output_pin,
+            state: false,
         }
     }
 
     fn update_pin_output(&mut self) {
         match self.state {
             true => {
-                let res = self.pin.set_low();
-                match res {
-                    Ok(_) => {}
-                    Err(_) => {
-                        panic!("Failed to set LED gpio low");
-                    }
-                }
+                self.pin.set_low().unwrap();
             }
             false => {
-                let res = self.pin.set_high();
-                match res {
-                    Ok(_) => {}
-                    Err(_) => {
-                        panic!("Failed to set LED gpio high");
-                    }
-                }
+                self.pin.set_high().unwrap();
             }
         }
     }
