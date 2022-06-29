@@ -1,4 +1,4 @@
-use crate::erus::erus_types::led::{GPIOParam, GPIO};
+use crate::erus::erus_types::led_gpio::{GPIOParam, GPIO};
 use embedded_hal::digital::v2::OutputPin;
 
 pub struct LED {
