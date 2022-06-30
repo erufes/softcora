@@ -13,7 +13,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let peripherals = Peripherals::take().unwrap();
     let mut led = peripherals.pins.gpio4.into_output()?;
 
-    let bot = ERUSBot::new(peripherals.pins.gpio0);
+    let bot = ERUSBot::new(peripherals.pins.gpio0.into_output()?.degrade());
 
     println!("{}", bot);
 

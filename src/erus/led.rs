@@ -1,18 +1,14 @@
-use crate::erus::erus_types::led_gpio::{GPIOParam, GPIO};
 use embedded_hal::digital::v2::OutputPin;
+use esp_idf_hal::gpio::{GpioPin, Output};
 
 pub struct LED {
-    pin: GPIO,
+    pin: GpioPin<Output>,
     state: bool,
 }
 
 impl LED {
-    pub fn new(pin: GPIOParam) -> Self {
-        let output_pin = pin.into_output().unwrap();
-        LED {
-            pin: output_pin,
-            state: false,
-        }
+    pub fn new(pin: GpioPin<Output>) -> Self {
+        LED { pin, state: false }
     }
 
     fn update_pin_output(&mut self) {

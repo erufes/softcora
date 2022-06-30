@@ -1,6 +1,7 @@
 use core::fmt;
 
-use super::erus_types::led_gpio::GPIOParam;
+use esp_idf_hal::gpio::{GpioPin, Output};
+
 use super::led::{LEDTrait, LED};
 
 pub struct ERUSBot {
@@ -8,7 +9,7 @@ pub struct ERUSBot {
 }
 
 impl ERUSBot {
-    pub fn new(led_gpio: GPIOParam) -> Self {
+    pub fn new(led_gpio: GpioPin<Output>) -> Self {
         let led = LED::new(led_gpio);
         println!("Created new bot with LED on GPIO 0");
         // let sens = Sensors::new(PackedSensorData {
