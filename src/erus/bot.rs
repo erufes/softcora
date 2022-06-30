@@ -12,13 +12,6 @@ impl ERUSBot {
     pub fn new(led_gpio: GpioPin<Output>) -> Self {
         let led = LED::new(led_gpio);
         println!("Created new bot with LED on GPIO 0");
-        // let sens = Sensors::new(PackedSensorData {
-        //     front_left_pin: led_gpio,
-        //     front_right_pin: led_gpio,
-        //     front_pin: led_gpio,
-        //     left_pin: led_gpio,
-        //     right_pin: led_gpio,
-        // });
         ERUSBot { led }
     }
 }
