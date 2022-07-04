@@ -7,4 +7,6 @@ Sensor::Sensor(uint pin) {
     pinMode(_pin, INPUT);
 }
 
-void Sensor::print() { printf("all ok!\n"); }
+std::string Sensor::toString() { return "all ok!"; }
+
+void Sensor::tick() {}

@@ -1,10 +1,15 @@
-#include "libs/sensor/sensor.h"
 #include <Arduino.h>
 
 #include "libs/bot/bot.h"
+#include "libs/pins.h"
 
-static ERUSBot bot = ERUSBot();
+static ERUSBot bot =
+    ERUSBot(Pins::engineLeftPin, Pins::engineRightPin, Pins::sensorPins);
 
-void setup() { pinMode(3, OUTPUT); }
+void setup() {}
 
-void loop() { bot.tick(); }
+void loop() {
+    bot.debug();
+    bot.tick();
+    sleep(10);
+}
