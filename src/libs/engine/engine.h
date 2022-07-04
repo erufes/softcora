@@ -1,16 +1,23 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#define ID_MAX_LENGTH 17
+
 #include "../utils.h"
+#include <string>
 
 class Engine {
-    uint _pin;
-    uint _currentValue;
+    char id[ID_MAX_LENGTH];
+    uint pin;
+    uint currentValue;
 
   public:
-    Engine();
+    Engine(uint pin, char* id);
+    Engine(uint pin);
     // ~Engine();
     void tick();
+    std::string toString();
+
     // void print();
 };
 
