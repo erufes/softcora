@@ -1,8 +1,12 @@
-#include "test.h"
+#include "libs/test/test.h"
+#include <Arduino.h>
 
-void setup() {
+void setup()
+{
+	pinMode(3, OUTPUT);
 }
 
-void loop() {
+void loop()
+{
 	test();
 }
