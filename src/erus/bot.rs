@@ -1,5 +1,6 @@
 use core::fmt;
 
+use super::engine;
 use esp_idf_hal::gpio::{GpioPin, Output};
 
 use super::led::{LEDTrait, LED};
@@ -21,6 +22,10 @@ pub trait ERUSBotTrait {
     fn off(&mut self);
     fn toggle(&mut self);
     fn tick(&mut self);
+    fn move_left_wheel(&mut self, speed: u8);
+    fn move_right_wheel(&mut self, speed: u8);
+    fn go_forward(&mut self, speed: u8);
+    fn go_backward(&mut self, speed: u8);
 }
 
 impl ERUSBotTrait for ERUSBot {
@@ -35,6 +40,27 @@ impl ERUSBotTrait for ERUSBot {
     }
     fn tick(&mut self) {
         println!("Tick");
+    }
+
+    fn move_left_wheel(&mut self, speed: u8) {
+        engine::set_left_engine_speed(speed);
+        println!("Move left");
+    }
+
+    fn move_right_wheel(&mut self, speed: u8) {
+        engine::set_right_engine_speed(speed);
+        println!("Move right");
+    }
+    fn go_forward(&mut self, speed: u8) {
+        engine::set_left_engine_speed(speed);
+        engine::set_right_engine_speed(speed);
+        println!("Go forward");
+    }
+
+    fn go_backward(&mut self, speed: u8) {
+        engine::set_left_engine_speed(speed);
+        engine::set_right_engine_speed(speed);
+        println!("Go backward");
     }
 }
 
