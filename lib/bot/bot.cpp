@@ -5,12 +5,12 @@
 
 using namespace std;
 
-ERUSBot::ERUSBot(uint engineLeftPin, uint engineRightPin,
-                 const uint sensorPins[5]) {
-    this->engineLeft =
-        std::unique_ptr<Engine>(new Engine(engineLeftPin, "LEFT"));
+ERUSBot::ERUSBot(engineData left, engineData right, const uint sensorPins[5]) {
+    this->engineLeft = std::unique_ptr<Engine>(new Engine(left.power, "LEFT"));
+
     this->engineRight =
-        std::unique_ptr<Engine>(new Engine(engineRightPin, "RIGHT"));
+        std::unique_ptr<Engine>(new Engine(right.power, "RIGHT"));
+
     for (int i = 0; i < 5; i++) {
         this->sensors[i] = std::unique_ptr<Sensor>(new Sensor(sensorPins[i]));
     }

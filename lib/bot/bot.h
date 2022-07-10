@@ -5,6 +5,11 @@
 #include "sensor.h"
 #include <memory>
 
+typedef struct EngineData {
+    uint power;
+    uint direction;
+} engineData;
+
 class ERUSBot {
     std::unique_ptr<Engine> engineLeft;
     std::unique_ptr<Engine> engineRight;
@@ -12,7 +17,7 @@ class ERUSBot {
     std::unique_ptr<Sensor> sensors[5];
 
   public:
-    ERUSBot(uint engineLeftPin, uint engineRightPin, const uint sensorPins[5]);
+    ERUSBot(engineData left, engineData right, const uint sensorPins[5]);
     void tick();
     void debug();
 };
