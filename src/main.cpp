@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
-#include "libs/bot/bot.h"
-#include "libs/pins.h"
+#include "bot.h"
+#include "pins.h"
 
 static ERUSBot bot =
     ERUSBot(Pins::engineLeftPin, Pins::engineRightPin, Pins::sensorPins);
@@ -9,7 +9,6 @@ static ERUSBot bot =
 void setup() {}
 
 void loop() {
-    bot.debug();
-    bot.tick();
-    sleep(10);
+  bot.debug();
+  bot.tick();
 }
