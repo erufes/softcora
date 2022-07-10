@@ -9,6 +9,6 @@ static ERUSBot bot =
 void setup() {}
 
 void loop() {
-  bot.debug();
-  bot.tick();
+    bot.debug();
+    bot.tick();
 }

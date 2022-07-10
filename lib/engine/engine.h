@@ -7,18 +7,18 @@
 #include <string>
 
 class Engine {
-  char id[ID_MAX_LENGTH];
-  uint pin;
-  uint currentValue;
+    std::string id;
+    uint pin;
+    uint currentValue;
 
-public:
-  Engine(uint pin, char *id);
-  Engine(uint pin);
-  // ~Engine();
-  void tick();
-  std::string toString();
+  public:
+    Engine(uint pin, std::string id);
+    Engine(uint pin);
+    // ~Engine();
+    void tick();
+    std::string toString();
 
-  // void print();
+    // void print();
 };
 
 #endif // ENGINE_H
