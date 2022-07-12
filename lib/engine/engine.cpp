@@ -1,7 +1,7 @@
 #include "engine.h"
 #include <Arduino.h>
 
-Engine::Engine(PinData pins, std::string id) {
+Engine::Engine(EngineT::PinData pins, std::string id) {
     this->pins = pins;
     this->id = id;
 
@@ -16,7 +16,7 @@ Engine::Engine(PinData pins, std::string id) {
     this->currentValue = 0;
 }
 
-Engine::Engine(PinData pins) { Engine(pins, "UNINDENTIFIED"); }
+Engine::Engine(EngineT::PinData pins) { Engine(pins, "UNINDENTIFIED"); }
 
 void Engine::tick() {}
 

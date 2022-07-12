@@ -1,14 +1,10 @@
 #ifndef BOT_H
 #define BOT_H
 
+#include "../../include/sharedTypes.h"
 #include "engine.h"
 #include "sensor.h"
 #include <memory>
-
-typedef struct EngineData {
-    uint power;
-    uint direction;
-} engineData;
 
 class ERUSBot {
     std::unique_ptr<Engine> engineLeft;
@@ -17,7 +13,8 @@ class ERUSBot {
     std::unique_ptr<Sensor> sensors[5];
 
   public:
-    ERUSBot(engineData left, engineData right, const uint sensorPins[5]);
+    ERUSBot(EngineT::PinData left, EngineT::PinData right,
+            const uint sensorPins[5]);
     void tick();
     void debug();
 };
