@@ -6,14 +6,20 @@
 #include "../../include/utils.h"
 #include <string>
 
+typedef struct pinData {
+    uint powerPin;
+    uint directionPinForward;
+    uint directionPinBackward;
+} PinData;
+
 class Engine {
     std::string id;
-    uint pin;
+    PinData pins;
     uint currentValue;
 
   public:
-    Engine(uint pin, std::string id);
-    Engine(uint pin);
+    Engine(PinData pins, std::string id);
+    Engine(PinData pins);
     // ~Engine();
     void tick();
     std::string toString();

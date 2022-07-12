@@ -6,10 +6,11 @@
 using namespace std;
 
 ERUSBot::ERUSBot(engineData left, engineData right, const uint sensorPins[5]) {
-    this->engineLeft = std::unique_ptr<Engine>(new Engine(left.power, "LEFT"));
+    this->engineLeft = std::unique_ptr<Engine>(
+        new Engine({left.power, left.direction, left.direction}, "LEFT"));
 
-    this->engineRight =
-        std::unique_ptr<Engine>(new Engine(right.power, "RIGHT"));
+    this->engineRight = std::unique_ptr<Engine>(
+        new Engine({right.power, right.direction, right.direction}, "RIGHT"));
 
     for (int i = 0; i < 5; i++) {
         this->sensors[i] = std::unique_ptr<Sensor>(new Sensor(sensorPins[i]));
@@ -29,9 +30,4 @@ void ERUSBot::debug() {
     cout << "Engine Stats" << endl
          << Colors::green << this->engineLeft->toString() << endl
          << this->engineRight->toString() << Colors::reset << endl;
-    cout << "Sensor Stats" << Colors::blue << endl;
-    // for (auto& sensor : this->sensors) {
-    //     cout << sensor.get()->toString() << endl;
-    // }
-    // cout << Colors::reset << endl;
 }
