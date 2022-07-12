@@ -16,7 +16,8 @@ namespace Pins {
             const uint power = 25;
             namespace direction {
                 const uint forward = 27;
-                const uint backward = 35;
+                // const uint backward = 35;
+                const uint backward = 0;
             }
         }
 
@@ -28,15 +29,17 @@ namespace Pins {
             }
         }
 
-        static constexpr uint enable = 36;
+        // static constexpr uint enable = 36;
+        static constexpr uint enable = 0;
     }
 
     namespace i2c {
-        static constexpr uint i2cA = 39;
+        static constexpr uint i2cA = 0;
+        // static constexpr uint i2cA = 39;
         static constexpr uint i2cB = 42;
     }
 
-    static constexpr uint sensors[5] = {12, 13, 10, 11, 5};
+    static constexpr uint sensors[5] = {11, 12, 13, 10, 5};
 
     namespace Buttons {
         static constexpr uint btn1 = 24;

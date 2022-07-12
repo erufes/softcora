@@ -6,14 +6,19 @@
 using namespace std;
 
 ERUSBot::ERUSBot(EngineT::PinData left, EngineT::PinData right,
-                 const uint sensorPins[5]) {
+                 const uint sensorPins[SENSOR_COUNT]) {
+    printf("creating bot...\n");
     this->engineLeft = std::unique_ptr<Engine>(new Engine(left, "LEFT"));
 
     this->engineRight = std::unique_ptr<Engine>(new Engine(right, "RIGHT"));
+    printf("motors created successfully...\n");
 
-    for (int i = 0; i < 5; i++) {
-        this->sensors[i] = std::unique_ptr<Sensor>(new Sensor(sensorPins[i]));
-    }
+    // for (int i = 0; i < SENSOR_COUNT; i++) {
+    //     printf("iter %d, target pin = %d\n", i, sensorPins[i]);
+    //     this->sensors[i] = std::unique_ptr<Sensor>(new
+    //     Sensor(sensorPins[i]));
+    // }
+    printf("Bot init successfully!\n");
 }
 
 void ERUSBot::tick() {
