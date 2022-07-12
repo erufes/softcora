@@ -4,14 +4,15 @@
 #include <string>
 
 class Sensor {
-  uint _pin;
+    uint _pin;
 
-public:
-  Sensor(uint pin);
-  void tick();
-  // ~Sensor();
-  // virtual void update();
-  std::string toString();
+  public:
+    Sensor(uint pin);
+    void tick();
+    void calibrate();
+    // ~Sensor();
+    // virtual void update();
+    std::string toString();
 };
 
 #endif // SENSOR_H

@@ -8,6 +8,9 @@ namespace EngineT {
         uint directionPinForward;
         uint directionPinBackward;
     } PinData;
+
+    enum class Direction { FORWARD, BACKWARD };
+    enum class Side { LEFT, RIGHT };
 }
 
-#endif;
+#endif

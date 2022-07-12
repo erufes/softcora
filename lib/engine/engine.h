@@ -11,15 +11,21 @@ class Engine {
     std::string id;
     EngineT::PinData pins;
     uint currentValue;
+    EngineT::Direction direction;
+    EngineT::Side side;
 
   public:
     Engine(EngineT::PinData pins, std::string id);
     Engine(EngineT::PinData pins);
-    // ~Engine();
     void tick();
     std::string toString();
-
-    // void print();
+    void setDirection(EngineT::Direction direction) {
+        this->direction = direction;
+    }
+    void setValue(uint value) { this->currentValue = value; }
+    EngineT::Direction getDirection() { return this->direction; }
+    uint getValue() { return this->currentValue; }
+    EngineT::Side getSide() { return this->side; }
 };
 
 #endif // ENGINE_H
