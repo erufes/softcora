@@ -1,8 +1,8 @@
 #include <Arduino.h>
 
 #include "bot.h"
-#include "env.h"
 #include "pins.h"
+#include "secret.h"
 #include <memory.h>
 
 static std::unique_ptr<ERUSBot> bot = std::unique_ptr<ERUSBot>(new ERUSBot(
@@ -12,10 +12,14 @@ static std::unique_ptr<ERUSBot> bot = std::unique_ptr<ERUSBot>(new ERUSBot(
      Pins::Engine::right::direction::backward},
     Pins::sensors));
 
-void setup() { printf("Setup called...\n"); }
+void setup() {
+    printf("Setup called...\n");
+    printf("Connecting to ssid \"%s\" with password \"%s\"...\n", WIFI_SSID,
+           WIFI_PASSWORD);
+}
 
 void loop() {
-    printf("all ok! - var is %s\n", WIFI_PASSWORD);
+
     // bot.debug();
     // bot.tick();
     delay(10);
