@@ -3,6 +3,7 @@
 #include "bot.h"
 #include "pins.h"
 #include "secret.h"
+#include <iostream>
 #include <memory.h>
 
 static std::unique_ptr<ERUSBot> bot = std::unique_ptr<ERUSBot>(new ERUSBot(
@@ -13,9 +14,9 @@ static std::unique_ptr<ERUSBot> bot = std::unique_ptr<ERUSBot>(new ERUSBot(
     Pins::sensors));
 
 void setup() {
-    printf("Setup called...\n");
-    printf("Connecting to ssid \"%s\" with password \"%s\"...\n", WIFI_SSID,
-           WIFI_PASSWORD);
+    std::cout << Colors::blue << "[INFO] " << Colors::reset
+              << "Connecting to SSID \"" << WIFI_SSID << "\" with password \""
+              << WIFI_PASSWORD << "\"" << std::endl;
 }
 
 void loop() {
