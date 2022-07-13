@@ -5,7 +5,7 @@ typedef unsigned int uint;
 
 namespace Colors {
     static const char* green = "\033[0;32m";
-    // static const char *red = "\033[0;31m";
+    static const char* red = "\033[0;31m";
     static const char* blue = "\033[0;34m";
     // static const char *yellow = "\033[0;33m";
     // static const char *cyan = "\033[0;36m";
