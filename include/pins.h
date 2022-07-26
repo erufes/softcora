@@ -12,20 +12,19 @@ namespace Pins {
 
     namespace Engine {
 
-        namespace left {
-            const uint power = 25;
-            namespace direction {
-                const uint forward = 27;
-                // const uint backward = 35;
-                const uint backward = 0;
+        namespace M1 {
+            const uint Power = 25;
+            namespace Direction {
+                const uint DirA = 26;
+                const uint DirB = 27;
             }
         }
 
-        namespace right {
-            const uint power = 14;
-            namespace direction {
-                const uint forward = 15;
-                const uint backward = 16;
+        namespace M2 {
+            const uint Power = 14;
+            namespace Direction {
+                const uint DirA = 15;
+                const uint DirB = 16;
             }
         }
 

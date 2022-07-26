@@ -9,16 +9,17 @@
 #include <memory>
 
 class ERUSBot {
-    std::unique_ptr<Engine> engineLeft;
-    std::unique_ptr<Engine> engineRight;
+    std::unique_ptr<Engine> motor1;
+    std::unique_ptr<Engine> motor2;
 
     std::unique_ptr<Sensor> sensors[SENSOR_COUNT];
 
   public:
-    ERUSBot(EngineT::PinData left, EngineT::PinData right,
+    ERUSBot(EngineT::PinData m1, EngineT::PinData m2,
             const uint sensorPins[SENSOR_COUNT]);
     void tick();
     void debug();
+    Engine* getMotor1();
 };
 
 #endif // BOT_H

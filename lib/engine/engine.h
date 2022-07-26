@@ -10,7 +10,7 @@
 class Engine {
     std::string id;
     EngineT::PinData pins;
-    uint currentValue;
+    byte currentValue;
     EngineT::Direction direction;
     EngineT::Side side;
 
@@ -19,10 +19,16 @@ class Engine {
     Engine(EngineT::PinData pins);
     void tick();
     std::string toString();
+
     void setDirection(EngineT::Direction direction) {
         this->direction = direction;
     }
-    void setValue(uint value) { this->currentValue = value; }
+
+    // sets the motor speed.  The sign of 'speed' determines the direction
+    // and the magnitude determines the speed.  limits: -255 <= speed < 255
+    // |speed| = 255 produces the maximum speed while speed = 0 is full brake.
+    void setCommit(int value);
+
     EngineT::Direction getDirection() { return this->direction; }
     uint getValue() { return this->currentValue; }
     EngineT::Side getSide() { return this->side; }
