@@ -49,16 +49,37 @@ static int64_t currentTime;
 
 int dirFlags = 0;
 
+void nextFlag() { dirFlags = (dirFlags + 1) % 4; }
+
 void loop() {
-    Engine* e = bot->getMotor1();
+    Engine* mot1 = bot->getMotor1();
+    Engine* mot2 = bot->getMotor2();
     currentTime = esp_timer_get_time();
     int64_t delta = currentTime - lastTime;
-    if (delta > 1000000) {
+    if (delta > 2000000) {
         lastTime = currentTime;
-        if (e->getDirection() == EngineT::Direction::BACKWARD) {
-            e->setDirection(EngineT::Direction::FORWARD);
-        } else {
-            e->setDirection(EngineT::Direction::BACKWARD);
+        nextFlag();
+        switch (dirFlags) {
+        case 0:
+            printf("setting speed to 0\n");
+            mot1->setSpeed(0);
+            mot2->setSpeed(0);
+            break;
+        case 1:
+            printf("setting speed to 255\n");
+            mot1->setSpeed(255);
+            mot2->setSpeed(255);
+            break;
+        case 2:
+            printf("setting speed to -255\n");
+            mot1->setSpeed(-255);
+            mot2->setSpeed(-255);
+            break;
+        case 3:
+            printf("setting speed to 100\n");
+            mot1->setSpeed(100);
+            mot2->setSpeed(100);
+            break;
         }
     }
 

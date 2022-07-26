@@ -20,6 +20,7 @@ class ERUSBot {
     void tick();
     void debug();
     Engine* getMotor1();
+    Engine* getMotor2();
 };
 
 #endif // BOT_H

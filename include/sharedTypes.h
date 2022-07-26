@@ -10,7 +10,7 @@ namespace EngineT {
         byte directionPinB;
     } PinData;
 
-    enum class Direction { FORWARD, BACKWARD };
+    enum class Direction { FORWARD, BACKWARD, BRAKE, COAST };
     enum class Side { LEFT, RIGHT };
 }
 

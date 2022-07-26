@@ -37,3 +37,4 @@ void ERUSBot::debug() {
 }
 
 Engine* ERUSBot::getMotor1() { return this->motor1.get(); }
+Engine* ERUSBot::getMotor2() { return this->motor2.get(); }

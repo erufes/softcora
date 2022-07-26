@@ -21,10 +21,10 @@ namespace Pins {
         }
 
         namespace M2 {
-            const uint Power = 14;
+            const uint Power = 16;
             namespace Direction {
-                const uint DirA = 15;
-                const uint DirB = 16;
+                const uint DirA = 17;
+                const uint DirB = 18;
             }
         }
 
