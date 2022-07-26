@@ -6,7 +6,7 @@
 using namespace std;
 
 ERUSBot::ERUSBot(EngineT::PackedPinData enginePinData,
-                 const uint sensorPins[SENSOR_COUNT]) {
+                 const uint sensorPins[SENSOR_COUNT], const uint batteryPin) {
     printf("creating bot...\n");
     this->motor1 =
         std::unique_ptr<Engine>(new Engine(enginePinData.m1, "MOTOR1"));
@@ -17,6 +17,8 @@ ERUSBot::ERUSBot(EngineT::PackedPinData enginePinData,
 
     this->motorEnablePin = enginePinData.s.enablePin;
     this->motorFaultPin = enginePinData.s.faultPin;
+
+    this->batteryPin = batteryPin;
 
     // for (int i = 0; i < SENSOR_COUNT; i++) {
     //     printf("iter %d, target pin = %d\n", i, sensorPins[i]);
@@ -62,5 +64,17 @@ void ERUSBot::checkButtons() {}
 bool ERUSBot::checkMotorFault() {
     if (digitalRead(this->motorFaultPin) == HIGH) {
         printf("h-bridge fault detected!\n");
+        return true;
     }
+    return false;
 }
+
+float ERUSBot::getBatteryVoltage() {
+    return 0;
+    // TODO
+    uint originalValue = analogRead(this->batteryPin);
+    return (((float)originalValue / 4096 * 3.3) - 2.46) / 0.05;
+    // float result = 1024 * originalValue / 3.5;
+    // return result * 3.325;
+}
+uint ERUSBot::getRawBatteryVoltage() { return analogRead(this->batteryPin); }

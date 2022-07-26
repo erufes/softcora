@@ -50,6 +50,8 @@ namespace Pins {
         static constexpr uint led2 = 38;
     }
 
+    static constexpr uint battery = 39;
+
 }
 
 #endif // PINS_H

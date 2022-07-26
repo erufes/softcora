@@ -24,9 +24,6 @@ namespace EngineT {
     enum class Direction { FORWARD, BACKWARD, BRAKE, COAST };
     enum class Side { LEFT, RIGHT };
 
-    PackedPinData packData(PinData m1, PinData m2, SharedPinData s) {
-        return {m1, m2, s};
-    }
 }
 
 #endif

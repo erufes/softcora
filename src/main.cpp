@@ -14,15 +14,12 @@
 #include <time.h>
 
 static std::unique_ptr<ERUSBot> bot = std::unique_ptr<ERUSBot>(new ERUSBot(
-    EngineT::packData(
-        EngineT::PinData{Pins::Engine::M1::Power,
-                         Pins::Engine::M1::Direction::DirA,
-                         Pins::Engine::M1::Direction::DirB},
-        EngineT::PinData{Pins::Engine::M2::Power,
-                         Pins::Engine::M2::Direction::DirA,
-                         Pins::Engine::M2::Direction::DirB},
-        EngineT::SharedPinData{Pins::Engine::fault, Pins::Engine::enable}),
-    Pins::sensors));
+    {{Pins::Engine::M1::Power, Pins::Engine::M1::Direction::DirA,
+      Pins::Engine::M1::Direction::DirB},
+     {Pins::Engine::M2::Power, Pins::Engine::M2::Direction::DirA,
+      Pins::Engine::M2::Direction::DirB},
+     EngineT::SharedPinData{Pins::Engine::fault, Pins::Engine::enable}},
+    Pins::sensors, Pins::battery));
 
 Connection* c;
 int64_t lastTime;
@@ -60,27 +57,31 @@ void loop() {
     Engine* mot2 = bot->getMotor2();
     currentTime = esp_timer_get_time();
     int64_t delta = currentTime - lastTime;
-    if (delta > 2000000) {
+    // if (delta > 2000000) {
+    if (delta > 200000) {
         lastTime = currentTime;
         nextFlag();
+        printf("battery reads %.2f\n", bot->getBatteryVoltage());
+        printf("raw battery reads %d\n", bot->getRawBatteryVoltage());
+
         switch (dirFlags) {
         case 0:
-            printf("setting speed to 0\n");
+            // printf("setting speed to 0\n");
             mot1->setSpeed(0);
             mot2->setSpeed(0);
             break;
         case 1:
-            printf("setting speed to 255\n");
+            // printf("setting speed to 255\n");
             mot1->setSpeed(255);
             mot2->setSpeed(255);
             break;
         case 2:
-            printf("setting speed to -255\n");
+            // printf("setting speed to -255\n");
             mot1->setSpeed(-255);
             mot2->setSpeed(-255);
             break;
         case 3:
-            printf("setting speed to 100\n");
+            // printf("setting speed to 100\n");
             mot1->setSpeed(100);
             mot2->setSpeed(100);
             break;
