@@ -10,8 +10,23 @@ namespace EngineT {
         byte directionPinB;
     } PinData;
 
+    typedef struct sharedPinData {
+        byte faultPin;
+        byte enablePin;
+    } SharedPinData;
+
+    typedef struct packedPinData {
+        pinData m1;
+        pinData m2;
+        sharedPinData s;
+    } PackedPinData;
+
     enum class Direction { FORWARD, BACKWARD, BRAKE, COAST };
     enum class Side { LEFT, RIGHT };
+
+    PackedPinData packData(PinData m1, PinData m2, SharedPinData s) {
+        return {m1, m2, s};
+    }
 }
 
 #endif

@@ -13,12 +13,16 @@
 #include <memory.h>
 #include <time.h>
 
-static std::unique_ptr<ERUSBot> bot = std::unique_ptr<ERUSBot>(
-    new ERUSBot({Pins::Engine::M1::Power, Pins::Engine::M1::Direction::DirA,
-                 Pins::Engine::M1::Direction::DirB},
-                {Pins::Engine::M2::Power, Pins::Engine::M2::Direction::DirA,
-                 Pins::Engine::M2::Direction::DirB},
-                Pins::sensors));
+static std::unique_ptr<ERUSBot> bot = std::unique_ptr<ERUSBot>(new ERUSBot(
+    EngineT::packData(
+        EngineT::PinData{Pins::Engine::M1::Power,
+                         Pins::Engine::M1::Direction::DirA,
+                         Pins::Engine::M1::Direction::DirB},
+        EngineT::PinData{Pins::Engine::M2::Power,
+                         Pins::Engine::M2::Direction::DirA,
+                         Pins::Engine::M2::Direction::DirB},
+        EngineT::SharedPinData{Pins::Engine::fault, Pins::Engine::enable}),
+    Pins::sensors));
 
 Connection* c;
 int64_t lastTime;

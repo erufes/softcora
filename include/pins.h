@@ -28,8 +28,8 @@ namespace Pins {
             }
         }
 
-        // static constexpr uint enable = 36;
-        static constexpr uint enable = 0;
+        static constexpr uint enable = 23;
+        static constexpr uint fault = 4;
     }
 
     namespace i2c {

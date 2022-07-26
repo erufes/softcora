@@ -5,13 +5,18 @@
 
 using namespace std;
 
-ERUSBot::ERUSBot(EngineT::PinData m1, EngineT::PinData m2,
+ERUSBot::ERUSBot(EngineT::PackedPinData enginePinData,
                  const uint sensorPins[SENSOR_COUNT]) {
     printf("creating bot...\n");
-    this->motor1 = std::unique_ptr<Engine>(new Engine(m1, "MOTOR1"));
+    this->motor1 =
+        std::unique_ptr<Engine>(new Engine(enginePinData.m1, "MOTOR1"));
 
-    this->motor2 = std::unique_ptr<Engine>(new Engine(m2, "MOTOR2"));
+    this->motor2 =
+        std::unique_ptr<Engine>(new Engine(enginePinData.m2, "MOTOR2"));
     printf("motors created successfully...\n");
+
+    this->motorEnablePin = enginePinData.s.enablePin;
+    this->motorFaultPin = enginePinData.s.faultPin;
 
     // for (int i = 0; i < SENSOR_COUNT; i++) {
     //     printf("iter %d, target pin = %d\n", i, sensorPins[i]);
@@ -22,11 +27,12 @@ ERUSBot::ERUSBot(EngineT::PinData m1, EngineT::PinData m2,
 }
 
 void ERUSBot::tick() {
-    this->motor1->tick();
-    this->motor2->tick();
-    for (auto& sensor : this->sensors) {
-        sensor.get()->tick();
-    }
+    this->tickSensors();
+    this->checkButtons();
+    this->updateState();
+    this->updateLED();
+
+    this->tickMotors();
 }
 
 void ERUSBot::debug() {
@@ -36,5 +42,25 @@ void ERUSBot::debug() {
          << this->motor2->toString() << Colors::reset << endl;
 }
 
-Engine* ERUSBot::getMotor1() { return this->motor1.get(); }
-Engine* ERUSBot::getMotor2() { return this->motor2.get(); }
+void ERUSBot::tickSensors() {
+    for (auto& sensor : this->sensors) {
+        sensor.get()->tick();
+    }
+}
+
+void ERUSBot::tickMotors() {
+    this->motor1->tick();
+    this->motor2->tick();
+}
+
+void ERUSBot::updateState() {}
+
+void ERUSBot::updateLED() {}
+
+void ERUSBot::checkButtons() {}
+
+bool ERUSBot::checkMotorFault() {
+    if (digitalRead(this->motorFaultPin) == HIGH) {
+        printf("h-bridge fault detected!\n");
+    }
+}
