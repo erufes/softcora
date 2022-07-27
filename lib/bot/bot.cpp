@@ -6,7 +6,8 @@
 using namespace std;
 
 ERUSBot::ERUSBot(EngineT::PackedPinData enginePinData,
-                 const uint sensorPins[SENSOR_COUNT], const uint batteryPin) {
+                 const uint sensorPins[SENSOR_COUNT], const uint batteryPin,
+                 const uint led1Pin, const uint led2Pin) {
     printf("creating bot...\n");
     this->motor1 =
         std::unique_ptr<Engine>(new Engine(enginePinData.m1, "MOTOR1"));
@@ -20,6 +21,9 @@ ERUSBot::ERUSBot(EngineT::PackedPinData enginePinData,
 
     this->batteryPin = batteryPin;
 
+    this->led1 = std::unique_ptr<Led>(new Led(led1Pin));
+    this->led2 = std::unique_ptr<Led>(new Led(led2Pin));
+
     // for (int i = 0; i < SENSOR_COUNT; i++) {
     //     printf("iter %d, target pin = %d\n", i, sensorPins[i]);
     //     this->sensors[i] = std::unique_ptr<Sensor>(new
@@ -29,7 +33,7 @@ ERUSBot::ERUSBot(EngineT::PackedPinData enginePinData,
 }
 
 void ERUSBot::tick() {
-    this->tickSensors();
+    // this->tickSensors();
     this->checkButtons();
     this->updateState();
     this->updateLED();
@@ -55,7 +59,13 @@ void ERUSBot::tickMotors() {
     this->motor2->tick();
 }
 
-void ERUSBot::updateState() {}
+void ERUSBot::updateState() {
+    switch (this->currentState) {
+    // TODO
+    default:
+        break;
+    }
+}
 
 void ERUSBot::updateLED() {}
 
