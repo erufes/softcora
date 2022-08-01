@@ -1,7 +1,7 @@
 #include "net.h"
+#include "../../include/secrets.h"
+#include "../../include/utils.h"
 #include "WiFi.h"
-#include "secrets.h"
-#include "utils.h"
 #include <iostream>
 
 Connection::Connection(string host, int port) {
