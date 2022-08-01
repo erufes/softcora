@@ -12,6 +12,7 @@ class Connection {
 
   public:
     Connection(string host, int port);
+    static void setupWirelessConnection();
     ~Connection();
     void setHost(string host);
     void setPort(string port);

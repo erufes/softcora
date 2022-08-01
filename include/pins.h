@@ -46,8 +46,8 @@ namespace Pins {
     }
 
     namespace LEDs {
-        static constexpr uint led1 = 34;
-        static constexpr uint led2 = 38;
+        static constexpr uint led1 = 5;
+        static constexpr uint led2 = 19;
     }
 
     static constexpr uint battery = 39;

@@ -1,4 +1,8 @@
 #include "net.h"
+#include "WiFi.h"
+#include "secrets.h"
+#include "utils.h"
+#include <iostream>
 
 Connection::Connection(string host, int port) {
     this->host = host;
@@ -41,4 +45,22 @@ void Connection::send(JsonObject& message) {
         this->client->add(buffer, size);
         this->client->send();
     }
+}
+
+void Connection::setupWirelessConnection() {
+    std::cout << Colors::blue << "[INFO] " << Colors::reset
+              << "Connecting to SSID \"" << WIFI_SSID << "\" with password\""
+              << WIFI_PASSWORD << "\"" << std::endl;
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(3000);
+        std::cout << Colors::red << "[ERROR] " << Colors::reset
+                  << "Failed to connect to SSID \"" << WIFI_SSID
+                  << "\" with password \"" << WIFI_PASSWORD
+                  << "\". Retrying... " << std::endl;
+    }
+    printf("\n connected to WiFi \n");
+    std::cout << Colors::green << "[SUCCESS] " << Colors::reset
+              << "Connected to WiFi" << std::endl;
 }
