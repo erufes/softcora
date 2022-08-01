@@ -1,7 +1,7 @@
 #ifndef BOT_H
 #define BOT_H
 
-#define SENSOR_COUNT 5
+#define SENSOR_COUNT 1
 
 #include "../../include/sharedTypes.h"
 #include "engine.h"

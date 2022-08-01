@@ -20,11 +20,10 @@ ERUSBot::ERUSBot(EngineT::PackedPinData enginePinData,
 
     this->batteryPin = batteryPin;
 
-    // for (int i = 0; i < SENSOR_COUNT; i++) {
-    //     printf("iter %d, target pin = %d\n", i, sensorPins[i]);
-    //     this->sensors[i] = std::unique_ptr<Sensor>(new
-    //     Sensor(sensorPins[i]));
-    // }
+    for (int i = 0; i < SENSOR_COUNT; i++) {
+        printf("iter %d, target pin = %d\n", i, sensorPins[i]);
+        this->sensors[i] = std::unique_ptr<Sensor>(new Sensor(sensorPins[i]));
+    }
     printf("Bot init successfully!\n");
 }
 
