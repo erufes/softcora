@@ -13,6 +13,7 @@ class Sensor {
     void tick();
     void calibrate();
     void read();
+    // Between 0 and 1
     float getReading() { return this->reading; }
     // ~Sensor();
     // virtual void update();

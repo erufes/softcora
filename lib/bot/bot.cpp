@@ -92,4 +92,23 @@ float ERUSBot::getBatteryVoltage() {
     // float result = 1024 * originalValue / 3.5;
     // return result * 3.325;
 }
+
 uint ERUSBot::getRawBatteryVoltage() { return analogRead(this->batteryPin); }
+
+// TODO: test!
+uint ERUSBot::estimateLinePosition(bool whiteLine) {
+    this->tickSensors();
+    uint avg = 0;
+    uint div = 0;
+    for (int i = 0; i < SENSOR_COUNT; i++) {
+        uint val = this->sensors[i].get()->getReading();
+        if (whiteLine) {
+            val = 1 - val;
+        }
+        if (val > SENSOR_MIN_THRESHOLD) {
+            avg += i * val;
+            div += val;
+        }
+    }
+    return avg / div;
+}

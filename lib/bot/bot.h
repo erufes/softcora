@@ -2,6 +2,7 @@
 #define BOT_H
 
 #define SENSOR_COUNT 1
+#define SENSOR_MIN_THRESHOLD 0.1
 
 #include "../../include/sharedTypes.h"
 #include "engine.h"
@@ -45,6 +46,7 @@ class ERUSBot {
     void disableMotors() { digitalWrite(this->motorEnablePin, LOW); }
     float getBatteryVoltage();
     uint getRawBatteryVoltage();
+    uint estimateLinePosition(bool whiteLine = false);
 };
 
 #endif // BOT_H
