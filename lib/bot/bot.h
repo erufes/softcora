@@ -10,6 +10,15 @@
 #include "sensor.h"
 #include <memory>
 
+typedef struct PIDControl {
+    float kp;
+    float ki;
+    float kd;
+    float integral;
+    float derivative;
+    float lastError;
+} PIDControl;
+
 // Note: Use this class as a singleton!
 class ERUSBot {
     std::unique_ptr<Engine> motor1;
@@ -35,6 +44,8 @@ class ERUSBot {
     enum BotState { IDLE, MOVING, STOPPED, ERROR };
 
     BotState currentState;
+
+    PIDControl pidData;
 
   public:
     ERUSBot();

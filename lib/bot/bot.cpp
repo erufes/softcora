@@ -34,6 +34,8 @@ ERUSBot::ERUSBot() {
     this->led1 = std::unique_ptr<Led>(new Led(Pins::LEDs::led1));
     this->led2 = std::unique_ptr<Led>(new Led(Pins::LEDs::led2));
 
+    this->pidData = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+
     printf("Bot init successfully!\n");
 }
 
@@ -111,4 +113,24 @@ uint ERUSBot::estimateLinePosition(bool whiteLine) {
         }
     }
     return avg / div;
+}
+
+void ERUSBot::updatePIDValues() {
+    uint position = this->estimateLinePosition();
+    static const uint midway = SENSOR_COUNT / 2;
+    int proportional = position - midway;
+    int derivative = proportional - this->pidData.proportional;
+    this->pidData.integral += proportional;
+    this->pidData.proportional = proportional;
+    this->pidData.derivative = derivative;
+
+    this->pidData.powerDiff = this->pidData.derivative * this->pidData.kd +
+                              this->pidData.integral * this->pidData.ki +
+                              this->pidData.proportional * this->pidData.kp;
+}
+
+void ERUSBot::updatePIDParams(float kp, float ki, float kd) {
+    this->pidData.kp = kp;
+    this->pidData.ki = ki;
+    this->pidData.kd = kd;
 }
