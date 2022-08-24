@@ -9,6 +9,7 @@
 #include "sensor.h"
 #include <memory>
 
+// Note: Use this class as a singleton!
 class ERUSBot {
     std::unique_ptr<Engine> motor1;
     std::unique_ptr<Engine> motor2;
@@ -35,9 +36,7 @@ class ERUSBot {
     BotState currentState;
 
   public:
-    ERUSBot(EngineT::PackedPinData enginePinData,
-            const uint sensorPins[SENSOR_COUNT], const uint batteryPin,
-            const uint led1Pin, const uint led2Pin);
+    ERUSBot();
     void tick();
     void debug();
     Engine* getMotor1() { return this->motor1.get(); }

@@ -12,13 +12,7 @@
 #include <memory.h>
 #include <time.h>
 
-static std::unique_ptr<ERUSBot> bot = std::unique_ptr<ERUSBot>(new ERUSBot(
-    {{Pins::Engine::M1::Power, Pins::Engine::M1::Direction::DirA,
-      Pins::Engine::M1::Direction::DirB},
-     {Pins::Engine::M2::Power, Pins::Engine::M2::Direction::DirA,
-      Pins::Engine::M2::Direction::DirB},
-     EngineT::SharedPinData{Pins::Engine::fault, Pins::Engine::enable}},
-    Pins::sensors, Pins::battery, Pins::LEDs::led1, Pins::LEDs::led2));
+static std::unique_ptr<ERUSBot> bot = std::unique_ptr<ERUSBot>(new ERUSBot());
 
 Connection* c;
 
@@ -27,7 +21,6 @@ static int64_t lastTime;
 static constexpr int64_t SECONDS = 1000000;
 
 void setup() {
-
     lastTime = esp_timer_get_time();
     // Connection::setupWirelessConnection();
     // c = new Connection("192.168.0.125", 20002);
