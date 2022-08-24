@@ -134,3 +134,31 @@ void ERUSBot::updatePIDParams(float kp, float ki, float kd) {
     this->pidData.ki = ki;
     this->pidData.kd = kd;
 }
+
+// TODO: Needs further testing!
+void ERUSBot::updateMotorState() {
+    // Compute the difference between the two motor power settings,
+    // m1 - m2.  If this is a positive number the robot will turn
+    // to the right.  If it is a negative number, the robot will
+    // turn to the left, and the magnitude of the number determines
+    // the sharpness of the turn.
+    // pietroluongo: this refers to this->pidData.powerDiff
+
+    uint power_difference = this->pidData.powerDiff;
+
+    // Compute the actual motor settings.  We never set either motor
+    // to a negative value.
+    const int max = 60;
+    if (power_difference > max)
+        power_difference = max;
+    if (power_difference < -max)
+        power_difference = -max;
+
+    if (power_difference < 0) {
+        this->motor1->setSpeed(max + power_difference);
+        this->motor2->setSpeed(max);
+    } else {
+        this->motor1->setSpeed(max);
+        this->motor2->setSpeed(max - power_difference);
+    }
+}

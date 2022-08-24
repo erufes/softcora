@@ -16,7 +16,8 @@ typedef struct PIDControl {
     float kd;
     float integral;
     float derivative;
-    float lastError;
+    float proportional;
+    uint powerDiff;
 } PIDControl;
 
 // Note: Use this class as a singleton!
@@ -58,6 +59,9 @@ class ERUSBot {
     float getBatteryVoltage();
     uint getRawBatteryVoltage();
     uint estimateLinePosition(bool whiteLine = false);
+    void updatePIDParams(float kp, float ki, float kd);
+    void updatePIDValues();
+    void ERUSBot::updateMotorState();
 };
 
 #endif // BOT_H
