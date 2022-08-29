@@ -3,6 +3,8 @@
 
 #include "../../include/sharedTypes.h"
 
+static constexpr int64_t SECONDS = 1000000;
+
 class Timer {
     uint startTime, duration;
     bool isRunning;

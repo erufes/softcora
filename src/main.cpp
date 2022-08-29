@@ -6,19 +6,17 @@
 #include "net.h"
 #include "pins.h"
 #include "secrets.h"
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
 #include <iostream>
 #include <memory.h>
 #include <time.h>
+
+static constexpr int64_t SECONDS = 1000000;
 
 static std::unique_ptr<ERUSBot> bot = std::unique_ptr<ERUSBot>(new ERUSBot());
 
 Connection* c;
 
 static int64_t lastTime;
-
-static constexpr int64_t SECONDS = 1000000;
 
 void setup() {
     lastTime = esp_timer_get_time();
@@ -51,22 +49,18 @@ void loop() {
 
             switch (dirFlags) {
             case 0:
-                // printf("setting speed to 0\n");
                 mot1->setSpeed(0);
                 mot2->setSpeed(0);
                 break;
             case 1:
-                // printf("setting speed to 255\n");
                 mot1->setSpeed(255);
                 mot2->setSpeed(255);
                 break;
             case 2:
-                // printf("setting speed to -255\n");
                 mot1->setSpeed(-255);
                 mot2->setSpeed(-255);
                 break;
             case 3:
-                // printf("setting speed to 100\n");
                 mot1->setSpeed(100);
                 mot2->setSpeed(100);
                 break;

@@ -36,6 +36,9 @@ ERUSBot::ERUSBot() {
 
     this->pidData = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
+    this->leftMarks = 0;
+    this->rightMarks = 0;
+
     printf("Bot init successfully!\n");
 }
 
@@ -55,10 +58,28 @@ void ERUSBot::debug() {
          << this->motor2->toString() << Colors::reset << endl;
 }
 
+bool ERUSBot::isReadingLeftMark() {
+    return this->sensors[Sensor::LEFT]->getReading() > SENSOR_MIN_THRESHOLD;
+}
+
+bool ERUSBot::isReadingRightMark() {
+    return this->sensors[Sensor::RIGHT]->getReading() > SENSOR_MIN_THRESHOLD;
+}
+
+void ERUSBot::checkSideMarks() {
+    if (this->isReadingLeftMark()) {
+        this->leftMarks++;
+    }
+    if (this->isReadingRightMark()) {
+        this->rightMarks++;
+    }
+}
+
 void ERUSBot::tickSensors() {
     for (auto& sensor : this->sensors) {
         sensor.get()->tick();
     }
+    this->checkSideMarks();
 }
 
 void ERUSBot::tickMotors() {

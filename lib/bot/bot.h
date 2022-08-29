@@ -48,6 +48,13 @@ class ERUSBot {
 
     PIDControl pidData;
 
+    uint leftMarks, rightMarks;
+
+    bool isReadingLeftMark();
+    bool isReadingRightMark();
+
+    void checkSideMarks();
+
   public:
     ERUSBot();
     void tick();

@@ -18,6 +18,12 @@ class Sensor {
     // ~Sensor();
     // virtual void update();
     std::string toString();
+
+    static constexpr uint LEFT = 0;
+    static constexpr uint LEFT_FRONT = 1;
+    static constexpr uint CENTER = 2;
+    static constexpr uint RIGHT_FRONT = 3;
+    static constexpr uint RIGHT = 4;
 };
 
 #endif // SENSOR_H
