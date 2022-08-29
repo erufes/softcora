@@ -53,6 +53,9 @@ void ERUSBot::debug() {
     cout << "Engine Stats" << endl
          << Colors::green << this->motor1->toString() << endl
          << this->motor2->toString() << Colors::reset << endl;
+    cout << "Sensor Readings" << endl
+         << Colors::green << this->sensors.get()->toString() << Colors::reset
+         << endl;
 }
 
 void ERUSBot::checkSideMarks() {

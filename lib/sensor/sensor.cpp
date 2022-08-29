@@ -7,11 +7,15 @@ Sensor::Sensor(uint pin) {
     printf("Sensor @ pin %d created successfully!\n", pin);
 }
 
-std::string Sensor::toString() { return "all ok!"; }
+std::string Sensor::toString() {
+    char str[99];
+    sprintf(str, "Sensor %d - %.2f", this->pin, this->reading);
+    return std::string(str);
+}
 
 void Sensor::tick() {
     this->read();
-    printf("[Sens %d] reading: %.2f\%\n", this->pin, this->reading);
+    // printf("[Sens %d] reading: %.2f\%\n", this->pin, this->reading);
 }
 
 void Sensor::calibrate() {}

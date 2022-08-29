@@ -31,8 +31,6 @@ int dirFlags = 0;
 
 void nextFlag() { dirFlags = (dirFlags + 1) % 4; }
 
-// static Sensor s = Sensor(32);
-
 void loop() {
     // Motor testing
     {

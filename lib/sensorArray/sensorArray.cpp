@@ -59,3 +59,13 @@ void SensorArray::getReadings(uint values[5]) {
         values[i] = this->sensors[i].get()->getReading();
     }
 }
+
+std::string SensorArray::toString() {
+    char str[999];
+    sprintf(str, "SensorArray: ");
+    for (int i = 0; i < SENSOR_COUNT; i++) {
+        sprintf(str, "%s\n%s", str, this->sensors[i].get()->toString().c_str());
+    }
+    sprintf(str, "%s\n\n", str);
+    return std::string(str);
+}
