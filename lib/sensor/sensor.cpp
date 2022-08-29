@@ -4,6 +4,7 @@
 
 Sensor::Sensor(uint pin) {
     this->pin = pin;
+    this->reading = 0;
     printf("Sensor @ pin %d created successfully!\n", pin);
 }
 

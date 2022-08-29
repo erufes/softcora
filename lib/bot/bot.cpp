@@ -40,7 +40,7 @@ ERUSBot::ERUSBot() {
 }
 
 void ERUSBot::tick() {
-    // this->tickSensors();
+    this->tickSensors();
     this->checkButtons();
     this->updateState();
     this->updateLED();
@@ -69,7 +69,7 @@ void ERUSBot::checkSideMarks() {
 
 void ERUSBot::tickSensors() {
     this->sensors.get()->tick();
-    this->checkSideMarks();
+    // this->checkSideMarks();
 }
 
 void ERUSBot::tickMotors() {

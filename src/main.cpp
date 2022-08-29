@@ -44,6 +44,7 @@ void loop() {
             nextFlag();
             printf("battery reads %.2f\n", bot->getBatteryVoltage());
             printf("raw battery reads %d\n", bot->getRawBatteryVoltage());
+            bot->debug();
 
             switch (dirFlags) {
             case 0:

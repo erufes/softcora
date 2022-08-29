@@ -70,9 +70,9 @@ void setDirectionFromSpeed(int& speed, EngineT::Direction& direction) {
 void Engine::setSpeed(int speed) {
     handleSpeedOverflow(speed);
 
-    this->currentSpeed = speed;
-
     setDirectionFromSpeed(speed, this->direction);
+
+    this->currentSpeed = speed;
 
     updateDirectionPins();
 }

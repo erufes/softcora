@@ -11,7 +11,7 @@ class Engine {
     std::string id;
     EngineT::PinData pins;
 
-    uint currentSpeed;
+    int currentSpeed;
     EngineT::Direction direction;
     EngineT::Side side;
 
