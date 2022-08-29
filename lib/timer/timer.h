@@ -4,8 +4,13 @@
 #include "../../include/sharedTypes.h"
 
 class Timer {
+    uint startTime, duration;
+    bool isRunning;
+    std::function<void()> callback;
+
   public:
-    Timer();
+    Timer(uint duration);
+    Timer(uint duration, std::function<void()> callback);
     void start();
     void stop();
     void reset();
