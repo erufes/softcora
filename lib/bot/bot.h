@@ -1,31 +1,18 @@
 #ifndef BOT_H
 #define BOT_H
 
-#define SENSOR_COUNT 1
-#define SENSOR_MIN_THRESHOLD 0.1
-
 #include "../../include/sharedTypes.h"
 #include "engine.h"
 #include "led.h"
-#include "sensor.h"
+#include "sensorArray.h"
 #include <memory>
-
-typedef struct PIDControl {
-    float kp;
-    float ki;
-    float kd;
-    float integral;
-    float derivative;
-    float proportional;
-    uint powerDiff;
-} PIDControl;
 
 // Note: Use this class as a singleton!
 class ERUSBot {
     std::unique_ptr<Engine> motor1;
     std::unique_ptr<Engine> motor2;
 
-    std::unique_ptr<Sensor> sensors[SENSOR_COUNT];
+    std::unique_ptr<SensorArray> sensors;
 
     std::unique_ptr<Led> led1;
     std::unique_ptr<Led> led2;
@@ -50,9 +37,6 @@ class ERUSBot {
 
     uint leftMarks, rightMarks;
 
-    bool isReadingLeftMark();
-    bool isReadingRightMark();
-
     void checkSideMarks();
 
   public:
@@ -65,10 +49,8 @@ class ERUSBot {
     void disableMotors() { digitalWrite(this->motorEnablePin, LOW); }
     float getBatteryVoltage();
     uint getRawBatteryVoltage();
-    uint estimateLinePosition(bool whiteLine = false);
     void updatePIDParams(float kp, float ki, float kd);
-    void updatePIDValues();
-    void ERUSBot::updateMotorState();
+    void updateMotorState();
 };
 
 #endif // BOT_H

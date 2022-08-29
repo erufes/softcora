@@ -26,11 +26,8 @@ ERUSBot::ERUSBot() {
 
     this->batteryPin = Pins::battery;
 
-    for (int i = 0; i < SENSOR_COUNT; i++) {
-        printf("iter %d, target pin = %d\n", i, Pins::sensors[i]);
-        this->sensors[i] =
-            std::unique_ptr<Sensor>(new Sensor(Pins::sensors[i]));
-    }
+    this->sensors = std::unique_ptr<SensorArray>(new SensorArray());
+
     this->led1 = std::unique_ptr<Led>(new Led(Pins::LEDs::led1));
     this->led2 = std::unique_ptr<Led>(new Led(Pins::LEDs::led2));
 
@@ -58,27 +55,17 @@ void ERUSBot::debug() {
          << this->motor2->toString() << Colors::reset << endl;
 }
 
-bool ERUSBot::isReadingLeftMark() {
-    return this->sensors[Sensor::LEFT]->getReading() > SENSOR_MIN_THRESHOLD;
-}
-
-bool ERUSBot::isReadingRightMark() {
-    return this->sensors[Sensor::RIGHT]->getReading() > SENSOR_MIN_THRESHOLD;
-}
-
 void ERUSBot::checkSideMarks() {
-    if (this->isReadingLeftMark()) {
+    if (this->sensors.get()->isReadingLeftMark()) {
         this->leftMarks++;
     }
-    if (this->isReadingRightMark()) {
+    if (this->sensors.get()->isReadingRightMark()) {
         this->rightMarks++;
     }
 }
 
 void ERUSBot::tickSensors() {
-    for (auto& sensor : this->sensors) {
-        sensor.get()->tick();
-    }
+    this->sensors.get()->tick();
     this->checkSideMarks();
 }
 
@@ -117,38 +104,6 @@ float ERUSBot::getBatteryVoltage() {
 }
 
 uint ERUSBot::getRawBatteryVoltage() { return analogRead(this->batteryPin); }
-
-// TODO: test!
-uint ERUSBot::estimateLinePosition(bool whiteLine) {
-    this->tickSensors();
-    uint avg = 0;
-    uint div = 0;
-    for (int i = 0; i < SENSOR_COUNT; i++) {
-        uint val = this->sensors[i].get()->getReading();
-        if (whiteLine) {
-            val = 1 - val;
-        }
-        if (val > SENSOR_MIN_THRESHOLD) {
-            avg += i * val;
-            div += val;
-        }
-    }
-    return avg / div;
-}
-
-void ERUSBot::updatePIDValues() {
-    uint position = this->estimateLinePosition();
-    static const uint midway = SENSOR_COUNT / 2;
-    int proportional = position - midway;
-    int derivative = proportional - this->pidData.proportional;
-    this->pidData.integral += proportional;
-    this->pidData.proportional = proportional;
-    this->pidData.derivative = derivative;
-
-    this->pidData.powerDiff = this->pidData.derivative * this->pidData.kd +
-                              this->pidData.integral * this->pidData.ki +
-                              this->pidData.proportional * this->pidData.kp;
-}
 
 void ERUSBot::updatePIDParams(float kp, float ki, float kd) {
     this->pidData.kp = kp;

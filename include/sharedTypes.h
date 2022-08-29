@@ -26,4 +26,14 @@ namespace EngineT {
 
 }
 
+typedef struct PIDControl {
+    float kp;
+    float ki;
+    float kd;
+    float integral;
+    float derivative;
+    float proportional;
+    uint powerDiff;
+} PIDControl;
+
 #endif
