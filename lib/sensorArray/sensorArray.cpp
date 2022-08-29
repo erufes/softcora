@@ -53,3 +53,9 @@ void SensorArray::updatePIDValues(PIDControl& oldPIDValues) {
                              oldPIDValues.integral * oldPIDValues.ki +
                              oldPIDValues.proportional * oldPIDValues.kp;
 }
+
+void SensorArray::getReadings(uint values[5]) {
+    for (int i = 0; i < SENSOR_COUNT; i++) {
+        values[i] = this->sensors[i].get()->getReading();
+    }
+}

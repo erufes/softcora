@@ -17,7 +17,7 @@ class SensorArray {
     void tick();
     void calibrate();
     void read();
-    float getReading(uint sensor);
+    void getReadings(uint values[5]);
     std::string toString();
     bool isReadingLeftMark();
     bool isReadingRightMark();
