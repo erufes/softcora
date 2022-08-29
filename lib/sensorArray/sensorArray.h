@@ -6,7 +6,7 @@
 #include "../../include/sharedTypes.h"
 #include "sensor.h"
 
-#define SENSOR_COUNT 1
+#define SENSOR_COUNT 5
 #define SENSOR_MIN_THRESHOLD 0.1
 
 class SensorArray {

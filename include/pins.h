@@ -38,7 +38,7 @@ namespace Pins {
         static constexpr uint i2cB = 42;
     }
 
-    static constexpr uint sensors[5] = {32};
+    static constexpr uint sensors[5] = {32, 33, 34, 35, 36};
 
     namespace Buttons {
         static constexpr uint btn1 = 24;
