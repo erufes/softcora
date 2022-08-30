@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #include <stdio.h>
 
-Sensor::Sensor(uint pin) {
+Sensor::Sensor(pinType pin) {
     this->pin = pin;
     this->reading = 0;
     printf("Sensor @ pin %d created successfully!\n", pin);

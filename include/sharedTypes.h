@@ -3,16 +3,18 @@
 #include "utils.h"
 #include <Arduino.h>
 
+typedef byte pinType;
+
 namespace EngineT {
     typedef struct pinData {
-        byte powerPin;
-        byte directionPinA;
-        byte directionPinB;
+        pinType powerPin;
+        pinType directionPinA;
+        pinType directionPinB;
     } PinData;
 
     typedef struct sharedPinData {
-        byte faultPin;
-        byte enablePin;
+        pinType faultPin;
+        pinType enablePin;
     } SharedPinData;
 
     typedef struct packedPinData {

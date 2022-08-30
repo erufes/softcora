@@ -1,15 +1,16 @@
 #ifndef SENSOR_H
 #define SENSOR_H
+#include "../../include/sharedTypes.h"
 #include "../../include/utils.h"
 #include <Arduino.h>
 #include <string>
 
 class Sensor {
-    byte pin;
+    pinType pin;
     float reading;
 
   public:
-    Sensor(uint pin);
+    Sensor(pinType pin);
     void tick();
     void calibrate();
     void read();
@@ -19,11 +20,11 @@ class Sensor {
     // virtual void update();
     std::string toString();
 
-    static constexpr uint LEFT = 0;
-    static constexpr uint LEFT_FRONT = 1;
-    static constexpr uint CENTER = 2;
-    static constexpr uint RIGHT_FRONT = 3;
-    static constexpr uint RIGHT = 4;
+    static constexpr pinType LEFT = 0;
+    static constexpr pinType LEFT_FRONT = 1;
+    static constexpr pinType CENTER = 2;
+    static constexpr pinType RIGHT_FRONT = 3;
+    static constexpr pinType RIGHT = 4;
 };
 
 #endif // SENSOR_H

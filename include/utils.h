@@ -1,8 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-typedef unsigned int uint;
-
 namespace Colors {
     static const char* green = "\033[0;32m";
     static const char* red = "\033[0;31m";
