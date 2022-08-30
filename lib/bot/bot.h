@@ -51,6 +51,7 @@ class ERUSBot {
     uint getRawBatteryVoltage();
     void updatePIDParams(float kp, float ki, float kd);
     void updateMotorState();
+    std::string toString();
 };
 
 #endif // BOT_H

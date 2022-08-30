@@ -141,3 +141,15 @@ void ERUSBot::updateMotorState() {
         this->motor2->setSpeed(max - power_difference);
     }
 }
+
+std::string ERUSBot::toString() {
+    std::string result = "[ERUSBot]\n";
+    result += "Engine Stats \n";
+    result += Colors::green;
+    result += this->motor1->toString();
+    result += "\n";
+    result += this->motor2->toString();
+    result += Colors::reset;
+    result += "\nBattery: " + std::to_string(this->getBatteryVoltage()) + "V";
+    return result;
+}

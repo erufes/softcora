@@ -2,6 +2,7 @@
 #include "../../include/pins.h"
 
 SensorArray::SensorArray() {
+    this->minThreshold = SENSOR_MIN_THRESHOLD;
     for (int i = 0; i < SENSOR_COUNT; i++) {
         printf("iter %d, target pin = %d\n", i, Pins::sensors[i]);
         this->sensors[i] =
@@ -10,11 +11,11 @@ SensorArray::SensorArray() {
 }
 
 bool SensorArray::isReadingLeftMark() {
-    return this->sensors[Sensor::LEFT]->getReading() > SENSOR_MIN_THRESHOLD;
+    return this->sensors[Sensor::LEFT]->getReading() > this->minThreshold;
 }
 
 bool SensorArray::isReadingRightMark() {
-    return this->sensors[Sensor::RIGHT]->getReading() > SENSOR_MIN_THRESHOLD;
+    return this->sensors[Sensor::RIGHT]->getReading() > this->minThreshold;
 }
 
 void SensorArray::tick() {
@@ -32,7 +33,7 @@ uint SensorArray::estimateLinePosition(bool whiteLine) {
         if (whiteLine) {
             val = 1 - val;
         }
-        if (val > SENSOR_MIN_THRESHOLD) {
+        if (val > this->minThreshold) {
             avg += i * val;
             div += val;
         }

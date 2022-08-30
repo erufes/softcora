@@ -11,6 +11,7 @@
 
 class SensorArray {
     std::unique_ptr<Sensor> sensors[SENSOR_COUNT];
+    float minThreshold;
 
   public:
     SensorArray();
@@ -24,6 +25,7 @@ class SensorArray {
     uint estimateLinePosition(bool whiteLine = false);
     void updatePIDParams(float kp, float ki, float kd);
     void updatePIDValues(PIDControl& oldPIDValues);
+    void setThreshold(float threshold) { this->minThreshold = threshold; }
 };
 
 #endif

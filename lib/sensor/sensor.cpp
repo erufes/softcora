@@ -14,10 +14,7 @@ std::string Sensor::toString() {
     return std::string(str);
 }
 
-void Sensor::tick() {
-    this->read();
-    // printf("[Sens %d] reading: %.2f\%\n", this->pin, this->reading);
-}
+void Sensor::tick() { this->read(); }
 
 void Sensor::calibrate() {}
 
