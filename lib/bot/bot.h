@@ -5,6 +5,7 @@
 #include "engine.h"
 #include "led.h"
 #include "sensorArray.h"
+#include "button.h"
 #include <memory>
 
 // Note: Use this class as a singleton!
@@ -16,6 +17,9 @@ class ERUSBot {
 
     std::unique_ptr<Led> led1;
     std::unique_ptr<Led> led2;
+
+    std::unique_ptr<Button> button1;
+    std::unique_ptr<Button> button2;
 
     byte motorEnablePin;
     byte motorFaultPin;

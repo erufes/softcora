@@ -87,7 +87,15 @@ void ERUSBot::updateState() {
 
 void ERUSBot::updateLED() {}
 
-void ERUSBot::checkButtons() {}
+void ERUSBot::checkButtons() {
+    if (this->button1->isPressed()){
+
+    };
+
+    if (this->button2->isPressed()){
+
+    };
+}
 
 bool ERUSBot::checkMotorFault() {
     if (digitalRead(this->motorFaultPin) == HIGH) {
