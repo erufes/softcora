@@ -6,11 +6,10 @@
 #include "net.h"
 #include "pins.h"
 #include "secrets.h"
+#include "timer.h"
 #include <iostream>
 #include <memory.h>
 #include <time.h>
-
-static constexpr int64_t SECONDS = 1000000;
 
 static std::unique_ptr<ERUSBot> bot = std::unique_ptr<ERUSBot>(new ERUSBot());
 
@@ -18,8 +17,11 @@ Connection* c;
 
 static int64_t lastTime;
 
+static Timer *tempo;
+
 void setup() {
-    lastTime = esp_timer_get_time();
+    tempo = new Timer(0.2*SECONDS);
+    tempo->start();
     // Connection::setupWirelessConnection();
     // c = new Connection("192.168.0.125", 20002);
 }
@@ -36,11 +38,9 @@ void loop() {
     {
         Engine* mot1 = bot->getMotor1();
         Engine* mot2 = bot->getMotor2();
-
-        currentTime = esp_timer_get_time();
-        int64_t deltaTime = currentTime - lastTime;
-        if (deltaTime > 0.2 * SECONDS) {
-            lastTime = currentTime;
+        tempo->tick();
+        if (tempo->isDone()) {
+            tempo->reset();
             nextFlag();
             printf("battery reads %.2f\n", bot->getBatteryVoltage());
             printf("raw battery reads %d\n", bot->getRawBatteryVoltage());

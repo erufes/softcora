@@ -20,6 +20,7 @@ void Timer::stop() {
 void Timer::reset() {
     this->startTime = esp_timer_get_time() - elapsedTime;
     this->done = false;
+    this->elapsedTime = 0;
 }
 
 void Timer::onFinish(std::function<void()> callback) {
@@ -33,7 +34,7 @@ bool Timer::isDone() {
 }
 
 void Timer::tick() {
-    if (elapsedTime > duration && (esp_timer_get_time() - startTime) > duration-elapsedTime){
+    if ((esp_timer_get_time() - startTime) > duration-elapsedTime){
         done = true;
     }
 }
