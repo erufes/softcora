@@ -23,6 +23,7 @@ class Timer {
     uint getDuration();
     uint getRemainingTime();
     uint getElapsedTime();
+    bool getIsRunning() { return this->isRunning; };
 };
 
 #endif

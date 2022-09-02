@@ -24,30 +24,21 @@ void Timer::reset() {
 }
 
 void Timer::onFinish(std::function<void()> callback) {
-    if(isDone()){
-        if(callback != NULL)callback();
+    if (isDone()) {
+        if (callback != NULL)
+            callback();
     }
 }
 
-bool Timer::isDone() {
-    return this->done;
-}
+bool Timer::isDone() { return this->done; }
 
 void Timer::tick() {
-    if ((esp_timer_get_time() - startTime) > duration-elapsedTime){
+    if ((esp_timer_get_time() - startTime) > duration - elapsedTime) {
         done = true;
     }
 }
 
-void Timer::setDuration(uint duration) {
-    this->duration = duration;
-}
-uint Timer::getDuration() {
-    return duration;
-}
-uint Timer::getRemainingTime() {
-    return this->duration - getElapsedTime();
-}
-uint Timer::getElapsedTime() {
-    return (esp_timer_get_time() - startTime);
-}
+void Timer::setDuration(uint duration) { this->duration = duration; }
+uint Timer::getDuration() { return duration; }
+uint Timer::getRemainingTime() { return this->duration - getElapsedTime(); }
+uint Timer::getElapsedTime() { return (esp_timer_get_time() - startTime); }

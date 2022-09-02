@@ -11,19 +11,95 @@ SensorArray::SensorArray() {
     }
     this->isFarRight = false;
     this->isFarLeft = false;
+    this->leftSensorTimer =
+        std::unique_ptr<Timer>(new Timer(MIN_DETECT_TIME * SECONDS));
+    this->rightSensorTimer =
+        std::unique_ptr<Timer>(new Timer(MIN_DETECT_TIME * SECONDS));
+    this->centerSensorTimer =
+        std::unique_ptr<Timer>(new Timer(MIN_DETECT_TIME * SECONDS));
+
+    this->leftMarks = 0;
+    this->rightMarks = 0;
+    this->canIncreaseLeftMarks = true;
+    this->canIncreaseRightMarks = true;
 }
 
 bool SensorArray::isReadingLeftMark() {
-    return this->sensors[Sensor::LEFT]->getReading() > this->minThreshold;
+    return this->sensors[Sensor::LEFT]->getReading() > this->maxThreshold;
 }
 
 bool SensorArray::isReadingRightMark() {
-    return this->sensors[Sensor::RIGHT]->getReading() > this->minThreshold;
+    return this->sensors[Sensor::RIGHT]->getReading() > this->maxThreshold;
 }
 
 void SensorArray::tick() {
     for (auto& sensor : this->sensors) {
         sensor.get()->tick();
+    }
+
+    Timer* leftSensorTimer = this->leftSensorTimer.get();
+    Timer* rightSensorTimer = this->rightSensorTimer.get();
+
+    // if (leftSensorTimer->isDone()) {
+    //     if (this->canIncreaseLeftMarks) {
+    //         this->leftMarks++;
+    //         this->canIncreaseLeftMarks = false;
+    //     }
+    //     leftSensorTimer->reset();
+    //     leftSensorTimer->stop();
+    // }
+
+    // {
+    //     if (leftSensorTimer->isDone()) {
+    //         if (this->canIncreaseLeftMarks) {
+    //             this->leftMarks++;
+    //             this->canIncreaseLeftMarks = false;
+    //         }
+    //         leftSensorTimer->reset();
+    //         leftSensorTimer->stop();
+    //     }
+
+    //     if (rightSensorTimer->isDone()) {
+    //         this->rightMarks++;
+    //         rightSensorTimer->reset();
+    //         rightSensorTimer->stop();
+    //         this->canIncreaseRightMarks = false;
+    //     }
+    // }
+
+    if (leftSensorTimer->isDone()) {
+        this->leftMarks++;
+        leftSensorTimer->reset();
+        leftSensorTimer->stop();
+    }
+    if (rightSensorTimer->isDone()) {
+        this->rightMarks++;
+        rightSensorTimer->reset();
+        rightSensorTimer->stop();
+    }
+
+    {
+        if (!isReadingLeftMark()) {
+            leftSensorTimer->stop();
+            leftSensorTimer->reset();
+        } else {
+            if (leftSensorTimer->getIsRunning()) {
+                leftSensorTimer->tick();
+            } else {
+                leftSensorTimer->start();
+            }
+        }
+
+        if (!isReadingRightMark()) {
+            rightSensorTimer->stop();
+            rightSensorTimer->reset();
+        } else {
+            if (rightSensorTimer->getIsRunning()) {
+                rightSensorTimer->tick();
+            } else {
+                rightSensorTimer->start();
+            }
+        }
     }
 }
 

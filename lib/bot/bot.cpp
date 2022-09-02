@@ -45,7 +45,7 @@ void ERUSBot::tick() {
     this->updateState();
     this->updateLED();
 
-    this->tickMotors();
+    // this->tickMotors();
 }
 
 void ERUSBot::debug() {
@@ -73,6 +73,8 @@ void ERUSBot::debug() {
             printf(">>>");
         printf(">>>\n");
     }
+    cout << "Left marks: " << this->sensors->getLeftMarks() << endl;
+    cout << "Right marks: " << this->sensors->getRightMarks() << endl;
 }
 
 void ERUSBot::checkSideMarks() {

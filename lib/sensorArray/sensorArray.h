@@ -5,17 +5,25 @@
 
 #include "../../include/sharedTypes.h"
 #include "sensor.h"
+#include "timer.h"
 
 #define SENSOR_COUNT 5
 #define SENSOR_MIN_THRESHOLD 0.1
 #define SENSOR_MAX_THRESHOLD 0.5
 #define SENSOR_MIDWAY_POINT 0.5
 
+#define MIN_DETECT_TIME 0.1
+
 class SensorArray {
     std::unique_ptr<Sensor> sensors[SENSOR_COUNT];
     float minThreshold;
     float maxThreshold;
     bool isFarRight, isFarLeft;
+
+    std::unique_ptr<Timer> leftSensorTimer, rightSensorTimer, centerSensorTimer;
+
+    uint leftMarks, rightMarks;
+    bool canIncreaseLeftMarks, canIncreaseRightMarks;
 
   public:
     SensorArray();
@@ -33,6 +41,8 @@ class SensorArray {
     void setThreshold(float threshold) { this->minThreshold = threshold; }
     bool sensorsAreFarLeft() { return this->isFarRight; };
     bool sensorsAreFarRight() { return this->isFarLeft; };
+    uint getLeftMarks() { return this->leftMarks; }
+    uint getRightMarks() { return this->rightMarks; }
 };
 
 #endif
