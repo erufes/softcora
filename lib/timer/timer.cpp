@@ -6,12 +6,8 @@ Timer::Timer(uint duration) {
     this->isRunning = false;
     this->done = false;
 }
-Timer::Timer(uint duration, std::function<void()> callback) {
-    this->duration = duration;
-    this->elapsedTime = 0;
-    this->isRunning = false;
+Timer::Timer(uint duration, std::function<void()> callback) : Timer(duration) {
     this->callback = callback;
-    this->done = false;
 }
 void Timer::start() {
     this->isRunning = true;
@@ -28,15 +24,12 @@ void Timer::reset() {
 
 void Timer::onFinish(std::function<void()> callback) {
     if(isDone()){
-        callback();
+        if(callback != NULL)callback();
     }
 }
 
 bool Timer::isDone() {
-    if(this->done && this->isRunning){
-        return true;
-    }
-    return false;
+    return this->done;
 }
 
 void Timer::tick() {
