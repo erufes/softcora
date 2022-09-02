@@ -6,8 +6,8 @@
 static constexpr int64_t SECONDS = 1000000;
 
 class Timer {
-    uint startTime, duration;
-    bool isRunning;
+    uint startTime, duration, elapsedTime;
+    bool isRunning, done;
     std::function<void()> callback;
 
   public:
