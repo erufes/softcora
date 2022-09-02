@@ -18,7 +18,7 @@ void Timer::stop() {
     this->elapsedTime = esp_timer_get_time() - startTime;
 }
 void Timer::reset() {
-    this->startTime = duration + esp_timer_get_time();
+    this->startTime = esp_timer_get_time() - elapsedTime;
     this->done = false;
 }
 
@@ -33,7 +33,7 @@ bool Timer::isDone() {
 }
 
 void Timer::tick() {
-    if (isRunning && (esp_timer_get_time() - startTime) > duration-elapsedTime){
+    if (elapsedTime > duration && (esp_timer_get_time() - startTime) > duration-elapsedTime){
         done = true;
     }
 }
