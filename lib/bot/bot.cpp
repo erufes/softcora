@@ -65,9 +65,9 @@ void ERUSBot::debug() {
          << "PD: " << this->pidData.powerDiff << Colors::reset << endl;
     int power_difference = this->pidData.powerDiff;
     if (power_difference < 0) {
-        printf(">>>\n");
-    } else {
         printf("<<<\n");
+    } else {
+        printf(">>>\n");
     }
 }
 
@@ -144,18 +144,18 @@ void ERUSBot::updateMotorState() {
 
     // Compute the actual motor settings.  We never set either motor
     // to a negative value.
-    const int max = 60;
+    const int max = 120;
     if (power_difference > max)
         power_difference = max;
     if (power_difference < -max)
         power_difference = -max;
 
-    if (power_difference < 0) {
-        this->motor1->setSpeed(max + power_difference);
-        this->motor2->setSpeed(max);
-    } else {
+    if (power_difference > 0) {
+        this->motor2->setSpeed(max + power_difference);
         this->motor1->setSpeed(max);
-        this->motor2->setSpeed(max - power_difference);
+    } else {
+        this->motor2->setSpeed(max);
+        this->motor1->setSpeed(max - power_difference);
     }
 }
 
