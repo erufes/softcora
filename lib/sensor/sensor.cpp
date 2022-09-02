@@ -5,6 +5,7 @@
 Sensor::Sensor(pinType pin) {
     this->pin = pin;
     this->reading = 0;
+    pinMode(this->pin, INPUT);
     printf("Sensor @ pin %d created successfully!\n", pin);
 }
 
