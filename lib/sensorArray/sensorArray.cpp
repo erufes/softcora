@@ -66,14 +66,24 @@ void SensorArray::tick() {
     //         this->canIncreaseRightMarks = false;
     //     }
     // }
+    if (!this->isReadingLeftMark()) {
+        this->canIncreaseLeftMarks = true;
+    }
+    if (!this->isReadingRightMark()) {
+        this->canIncreaseRightMarks = true;
+    }
 
     if (leftSensorTimer->isDone()) {
-        this->leftMarks++;
+        if (this->canIncreaseLeftMarks)
+            this->leftMarks++;
+        this->canIncreaseLeftMarks = false;
         leftSensorTimer->reset();
         leftSensorTimer->stop();
     }
     if (rightSensorTimer->isDone()) {
-        this->rightMarks++;
+        if (this->canIncreaseRightMarks)
+            this->rightMarks++;
+        this->canIncreaseRightMarks = false;
         rightSensorTimer->reset();
         rightSensorTimer->stop();
     }
