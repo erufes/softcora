@@ -24,28 +24,53 @@ void SensorArray::tick() {
     }
 }
 
-// TODO: test!
-uint SensorArray::estimateLinePosition(bool whiteLine) {
-    uint avg = 0;
-    uint div = 0;
+float SensorArray::estimateLinePosition5(bool whiteLine) {
+    float avg = 0;
+    float div = 0;
     for (int i = 0; i < SENSOR_COUNT; i++) {
-        uint val = this->sensors[i].get()->getReading();
+        float val = this->sensors[i].get()->getReading();
         if (whiteLine) {
             val = 1 - val;
         }
         if (val > this->minThreshold) {
-            avg += i * val;
+            avg += (i + 1) * val;
             div += val;
         }
     }
-    return avg / div;
+    if (div == 0) {
+        // printf('"\n[SensorArray] %s Error: attempted to divide by 0!%s\n",
+        //        Co'lors::red, Colors::reset);
+        return 0;
+    }
+    return (avg / div);
+}
+
+float SensorArray::estimateLinePosition2(bool whiteLine) {
+    float valR = 0, valL = 0;
+
+    valL = this->sensors[1].get()->getReading();
+    if (whiteLine) {
+        valL = 1 - valL;
+    }
+    valR = this->sensors[3].get()->getReading();
+    if (whiteLine) {
+        valR = 1 - valR;
+    }
+
+    return (valR - valL) * 0.5f + .5f;
+
+    // return avg / div;
 }
 
 void SensorArray::updatePIDValues(PIDControl& oldPIDValues) {
-    uint position = this->estimateLinePosition();
-    static const uint midway = SENSOR_COUNT / 2;
+    uint position = this->estimateLinePosition2() * 4000;
+    // This works for 2 sensors specifically!
+    static const uint midway = 2000;
+
     int proportional = position - midway;
     int derivative = proportional - oldPIDValues.proportional;
+    printf("Prop: %d, Deriv: %d", proportional, derivative);
+
     oldPIDValues.integral += proportional;
     oldPIDValues.proportional = proportional;
     oldPIDValues.derivative = derivative;

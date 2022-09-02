@@ -32,10 +32,10 @@ typedef struct PIDControl {
     float kp;
     float ki;
     float kd;
-    float integral;
-    float derivative;
-    float proportional;
-    uint powerDiff;
+    int integral;
+    int derivative;
+    int proportional;
+    int powerDiff;
 } PIDControl;
 
 #endif

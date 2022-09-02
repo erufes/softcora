@@ -31,7 +31,7 @@ ERUSBot::ERUSBot() {
     this->led1 = std::unique_ptr<Led>(new Led(Pins::LEDs::led1));
     this->led2 = std::unique_ptr<Led>(new Led(Pins::LEDs::led2));
 
-    this->pidData = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    this->pidData = {1, 0, 1, 0, 0, 0, 0};
 
     this->leftMarks = 0;
     this->rightMarks = 0;
@@ -56,6 +56,19 @@ void ERUSBot::debug() {
     cout << "Sensor Readings" << endl
          << Colors::green << this->sensors.get()->toString() << Colors::reset
          << endl;
+    cout << "Estimated line position:" << this->sensors->estimateLinePosition2()
+         << endl;
+    cout << "PID Data:" << endl
+         << Colors::green << "P: " << this->pidData.proportional << endl
+         << "I: " << this->pidData.integral << endl
+         << "D: " << this->pidData.derivative << endl
+         << "PD: " << this->pidData.powerDiff << Colors::reset << endl;
+    int power_difference = this->pidData.powerDiff;
+    if (power_difference < 0) {
+        printf(">>>\n");
+    } else {
+        printf("<<<\n");
+    }
 }
 
 void ERUSBot::checkSideMarks() {
@@ -69,10 +82,14 @@ void ERUSBot::checkSideMarks() {
 
 void ERUSBot::tickSensors() {
     this->sensors.get()->tick();
+    this->sensors.get()->estimateLinePosition2();
+    this->sensors.get()->updatePIDValues(this->pidData);
     // this->checkSideMarks();
 }
 
 void ERUSBot::tickMotors() {
+    this->updateMotorState();
+
     this->motor1->tick();
     this->motor2->tick();
 }
@@ -123,7 +140,7 @@ void ERUSBot::updateMotorState() {
     // the sharpness of the turn.
     // pietroluongo: this refers to this->pidData.powerDiff
 
-    uint power_difference = this->pidData.powerDiff;
+    int power_difference = this->pidData.powerDiff;
 
     // Compute the actual motor settings.  We never set either motor
     // to a negative value.

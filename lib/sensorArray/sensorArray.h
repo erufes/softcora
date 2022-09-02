@@ -22,7 +22,8 @@ class SensorArray {
     std::string toString();
     bool isReadingLeftMark();
     bool isReadingRightMark();
-    uint estimateLinePosition(bool whiteLine = false);
+    float estimateLinePosition5(bool whiteLine = false);
+    float estimateLinePosition2(bool whiteLine = false);
     void updatePIDParams(float kp, float ki, float kd);
     void updatePIDValues(PIDControl& oldPIDValues);
     void setThreshold(float threshold) { this->minThreshold = threshold; }
