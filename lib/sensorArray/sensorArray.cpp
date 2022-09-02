@@ -3,11 +3,14 @@
 
 SensorArray::SensorArray() {
     this->minThreshold = SENSOR_MIN_THRESHOLD;
+    this->maxThreshold = SENSOR_MAX_THRESHOLD;
     for (int i = 0; i < SENSOR_COUNT; i++) {
         printf("iter %d, target pin = %d\n", i, Pins::sensors[i]);
         this->sensors[i] =
             std::unique_ptr<Sensor>(new Sensor(Pins::sensors[i]));
     }
+    this->isFarRight = false;
+    this->isFarLeft = false;
 }
 
 bool SensorArray::isReadingLeftMark() {
@@ -57,7 +60,26 @@ float SensorArray::estimateLinePosition2(bool whiteLine) {
         valR = 1 - valR;
     }
 
-    return (valR - valL) * 0.5f + .5f;
+    // This should always be between 0 and 1
+    float result = (valR - valL) * 0.5f + .5f;
+
+    if (result >
+        SENSOR_MIDWAY_POINT + this->maxThreshold * SENSOR_MIDWAY_POINT) {
+        isFarLeft = true;
+    }
+    if (result <
+        SENSOR_MIDWAY_POINT - (this->maxThreshold * SENSOR_MIDWAY_POINT)) {
+        isFarRight = true;
+    }
+
+    if (isFarLeft && result < SENSOR_MIDWAY_POINT - this->minThreshold) {
+        isFarLeft = false;
+    }
+    if (isFarRight && result > SENSOR_MIDWAY_POINT + this->minThreshold) {
+        isFarRight = false;
+    }
+
+    return result;
 
     // return avg / div;
 }
@@ -69,7 +91,6 @@ void SensorArray::updatePIDValues(PIDControl& oldPIDValues) {
 
     int proportional = position - midway;
     int derivative = proportional - oldPIDValues.proportional;
-    printf("Prop: %d, Deriv: %d", proportional, derivative);
 
     oldPIDValues.integral += proportional;
     oldPIDValues.proportional = proportional;

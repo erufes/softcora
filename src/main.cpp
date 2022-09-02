@@ -20,7 +20,7 @@ static int64_t lastTime;
 static Timer* tempo;
 
 void setup() {
-    tempo = new Timer(0.2 * SECONDS);
+    tempo = new Timer(0.1 * SECONDS);
     tempo->start();
     // Connection::setupWirelessConnection();
     // c = new Connection("192.168.0.125", 20002);

@@ -65,8 +65,12 @@ void ERUSBot::debug() {
          << "PD: " << this->pidData.powerDiff << Colors::reset << endl;
     int power_difference = this->pidData.powerDiff;
     if (power_difference < 0) {
+        if (this->sensors->sensorsAreFarLeft())
+            printf("<<<");
         printf("<<<\n");
     } else {
+        if (this->sensors->sensorsAreFarRight())
+            printf(">>>");
         printf(">>>\n");
     }
 }
@@ -156,6 +160,14 @@ void ERUSBot::updateMotorState() {
     } else {
         this->motor2->setSpeed(max);
         this->motor1->setSpeed(max - power_difference);
+    }
+
+    if (this->sensors->sensorsAreFarLeft()) {
+        this->motor1->setSpeed(max);
+        this->motor2->setSpeed(0);
+    } else if (this->sensors->sensorsAreFarRight()) {
+        this->motor1->setSpeed(0);
+        this->motor2->setSpeed(max);
     }
 }
 

@@ -8,10 +8,14 @@
 
 #define SENSOR_COUNT 5
 #define SENSOR_MIN_THRESHOLD 0.1
+#define SENSOR_MAX_THRESHOLD 0.5
+#define SENSOR_MIDWAY_POINT 0.5
 
 class SensorArray {
     std::unique_ptr<Sensor> sensors[SENSOR_COUNT];
     float minThreshold;
+    float maxThreshold;
+    bool isFarRight, isFarLeft;
 
   public:
     SensorArray();
@@ -27,6 +31,8 @@ class SensorArray {
     void updatePIDParams(float kp, float ki, float kd);
     void updatePIDValues(PIDControl& oldPIDValues);
     void setThreshold(float threshold) { this->minThreshold = threshold; }
+    bool sensorsAreFarLeft() { return this->isFarRight; };
+    bool sensorsAreFarRight() { return this->isFarLeft; };
 };
 
 #endif
